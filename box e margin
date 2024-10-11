@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quadratini colorati</title>
+<style>
+.quadratino {
+width: 100px;
+height: 100px;
+border: 2px solid black;
+display: inline-block;
+margin: 10px;
+box-sizing: border-box; /* Assicura che il bordo sia compreso nelle dimensioni */
+}
+
+.red {
+background-color: red;
+}
+
+.brown {
+background-color: brown;
+}
+
+. orange {
+background-color: arancione;
+}
+
+.black {
+background-color: black;
+}
+
+.pink {
+background-color: pinke;
+}
+</style>
+</head>
+<body>
+
+<div class="quadratino red"></div>
+<div class="quadratino brown"></div>
+<div class="quadratino orange"></div>
+<div class="quadratino black"></div>
+<div class="quadratino pink"></div>
+
+</body>
+</html>
