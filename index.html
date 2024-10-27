@@ -7,6 +7,25 @@
     <link rel="stylesheet" href="paginaweb.css">
 </head>
 <body>
+    <div class="topnav" id="myTopnav">
+        <a href="/sitoweb.html" class="">Home</a>
+        <a href="./index.html" class="active">News</a>
+        <a href="menu_esercizi.htm">Esercizi Html/css</a>
+        <a href="aboutme.html" class="">Autore Il Gands</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+          <i class="fa fa-bars"></i>
+        </a>
+      </div>
+      <script>
+      function myFunction() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+          x.className += " responsive";
+        } else {
+          x.className = "topnav";
+        }
+      }
+      </script>
     <h1 align="center">Notizie </h1>
     <div class="contenitore">
         <div class="news">
