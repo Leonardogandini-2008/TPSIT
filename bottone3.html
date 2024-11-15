@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pulsanti </title>
+    <style>
+        .aforisma {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="aforisma">
+        <p id="aforisma1">"La logica ti porta da A a B. L'immaginazione ti porta ovunque." - Albert Einstein</p>
+        <button onclick="toggleTesto('aforisma1')">Mostra/pulsante 4</button>
+    </div>
+
+    <div class="aforisma">
+        <p id="aforisma2">"La scienza non conosce paese, perché la conoscenza appartiene all'umanità." - Louis Pasteur</p>
+        <button onclick="toggleTesto('aforisma2')">Mostra/pulsante 4 2</button>
+    </div>
+
+    <div class="aforisma">
+        <p id="aforisma3">"L'importante è non smettere mai di farsi domande." - Stephen Hawking</p>
+        <button onclick="toggleTesto('aforisma3')">Mostra/pulsante 4 3</button>
+    </div>
+
+    <div class="aforisma">
+        <p id="aforisma4">"La scienza è organizzazione della conoscenza in modo che produca ulteriore conoscenza." - Isaac Asimov</p>
+        <button onclick="toggleTesto('aforisma4')">Mostra/ pulsante 4</button>
+    </div>
+
+    <div class="aforisma">
+        <p id="aforisma5">"In natura nulla si crea, nulla si distrugge, tutto si trasforma." - Antoine Lavoisier</p>
+        <button onclick="toggleTesto('aforisma5')">Mostra/Nascondi pulsante 5</button>
+    </div>
+
+    <script>
+        function toggleTesto(id) {
+            const testo = document.getElementById(id);
+            if (testo.style.display === "none") {
+                testo.style.display = "block";
+            } else {
+                testo.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
