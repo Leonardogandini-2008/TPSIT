@@ -1,0 +1,97 @@
+ <!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolo Dislivello </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f8f8;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        form {
+            background-color: rgb(182, 37, 37);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #b81818;
+            border-radius: 4px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Monviso_-_Monte_Viso_-_2009-07-10.jpg/640px-Monviso_-_Monte_Viso_-_2009-07-10.jpg');
+            background-size: cover;
+            background-position: center;
+            color: rgb(180, 4, 4);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        #risultato {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            display: none;
+        }
+</style>
+</head>
+<body>
+    <h1>Calcolo Dislivello </h1>
+    <form id="trekking-form">
+        <label for="partenza">Altezza punto di partenza (m):</label>
+        <input type="number" id="partenza" required>
+
+        <label for="pausa">Altezza punto di pausa (m):</label>
+        <input type="number" id="pausa" required>
+
+        <label for="arrivo">Altezza punto di arrivo (m):</label>
+        <input type="number" id="arrivo" required>
+
+        <button type="button" onclick="calcolaDislivello()">Calcola Dislivello</button>
+    </form>
+
+    <div id="risultato"></div>
+
+    <script>
+        function calcolaDislivello() {
+            const partenza = parseInt(document.getElementById('partenza').value);
+            const pausa = parseInt(document.getElementById('pausa').value);
+            const arrivo = parseInt(document.getElementById('arrivo').value);
+
+            const dislivelloTotale = Math.abs(arrivo - partenza);
+
+            const risultatoDiv = document.getElementById('risultato');
+            risultatoDiv.innerHTML = `
+                <h3>Dati del Trekking:</h3>
+                <p>Punto di partenza: ${partenza} m</p>
+                <p>Punto di pausa: ${pausa} m</p>
+                <p>Punto di arrivo: ${arrivo} m</p>
+                <h3>Dislivello Totale: ${dislivelloTotale} m</h3>
+            `;
+            risultatoDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
