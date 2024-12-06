@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morra Cinese</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>MORRA Game</h1>
+    <div>
+        <p>metti la tua mossa:</p>
+        <button onclick="playGame('sasso')">Sasso (sasso)</button>
+        <button onclick="playGame('carta')">Carta (carta)</button>
+        <button onclick="playGame('forbice')">Forbice (forbicie)</button>
+    </div>
+    <p id="playerMove"></p>
+    <p id="botMove"></p>
+    <p id="result"></p>
+
+    <script>
+    const morraArray = ["sasso", "carta", "forbice"];
+
+    function playGame(playerChoice) {
+        const botChoice = getBotChoice();
+        
+        document.getElementById("playerMove").innerHTML = "You chose: " + playerChoice;
+        document.getElementById("botMove").innerHTML = "Bot chose: " + botChoice;
+        
+        const result = determineWinner(playerChoice, botChoice);
+        document.getElementById("result").innerHTML = result;
+    }
+
+    function getBotChoice() {
+        const randomIndex = Math.floor(Math.random() * 3);
+        return morraArray[randomIndex];
+    }
+
+    function determineWinner(playerChoice, botChoice) {
+        if (playerChoice === botChoice) {
+            return "It's a tie!";
+        }
+        if (
+            (playerChoice === "sasso" && botChoice === "forbice") ||
+            (playerChoice === "carta" && botChoice === "sasso") ||
+            (playerChoice === "forbice" && botChoice === "carta")
+        ) {
+            return "ai vinto!";
+        }
+        return "Bot vinto!";
+    }
+    </script>
+</body>
+</html>
