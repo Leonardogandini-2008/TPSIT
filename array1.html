@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisi Numerica array1</title>
+</head>
+<body>
+    <h1>Analisi Numerica array1</h1>
+    <p>Imparo ad usare gli array con i numeri</p>
+    <p>Sviluppo algoritmi che inseriscono numeri particolari negli array</p>
+
+    <p>Lista numeri casuali:</p>
+    <p id="out1"></p>
+
+    <p>Numeri consecutivi tra 1 e 1000:</p>
+    <p id="out2"></p>
+
+    <p>Numeri primi casuali:</p>
+    <p id="out3"></p>
+
+    <p>Numeri primi tra 1 e 100:</p>
+    <p id="out4"></p>
+
+    <p>Fattori di numeri da 1 a 100:</p>
+    <p id="out5"></p>
+
+    <script>
+        // 1) Stampare 100 numeri casuali tra 1 e 100 in un array
+        let numeriCasuali = [];
+        function InserisciNumeroCasuale() {
+            return Math.floor(Math.random() * 100) + 1;
+        }
+
+        for (let i = 0; i < 100; i++) {
+            numeriCasuali.push(InserisciNumeroCasuale());
+        }
+        document.getElementById("out1").innerHTML = numeriCasuali.join(", ");
+
+        // 2) Stampare 100 numeri consecutivi tra 1 e 1000
+        let numeriConsecutivi = [];
+        for (let i = 1; i <= 100; i++) {
+            numeriConsecutivi.push(i + 900);  // Genera numeri tra 901 e 1000
+        }
+        document.getElementById("out2").innerHTML = numeriConsecutivi.join(", ");
+
+        // 3) Inserire 10 numeri primi casuali in un array
+        let numeriPrimiCasuali = [];
+        function IsPrime(n) {
+            if (n <= 1) return false;
+            for (let i = 2; i <= Math.sqrt(n); i++) {
+                if (n % i === 0) return false;
+            }
+            return true;
+        }
+
+        while (numeriPrimiCasuali.length < 10) {
+            let numeroCasuale = Math.floor(Math.random() * 100) + 1;
+            if (IsPrime(numeroCasuale) && !numeriPrimiCasuali.includes(numeroCasuale)) {
+                numeriPrimiCasuali.push(numeroCasuale);
+            }
+        }
+        document.getElementById("out3").innerHTML = numeriPrimiCasuali.join(", ");
+
+        // 4) Inserire nell'array tutti i numeri primi tra 1 e 100
+        let numeriPrimi = [];
+        for (let i = 1; i <= 100; i++) {
+            if (IsPrime(i)) {
+                numeriPrimi.push(i);
+            }
+        }
+        document.getElementById("out4").innerHTML = numeriPrimi.join(", ");
+
+        // 5) Stampare i numeri da 1 a 100 con i loro fattori
+        let fattori = [];
+        for (let i = 1; i <= 100; i++) {
+            let fattoriNumero = [];
+            for (let j = 1; j <= i; j++) {
+                if (i % j === 0) {
+                    fattoriNumero.push(j);
+                }
+            }
+            fattori.push(`${i}: ${fattoriNumero.join(", ")}`);
+        }
+        document.getElementById("out5").innerHTML = fattori.join("<br>");
+    </script>
+</body>
+</html>
