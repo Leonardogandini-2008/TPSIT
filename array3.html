@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Numeri Primi da 1 a 1000</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .number {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 5px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .prime {
+            background-color: red;
+            color: white;
+        }
+        .non-prime {
+            background-color: lightgray;
+        }
+        /* Regola per la disposizione a griglia */
+        #numbers-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 10px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="width: 100%; text-align: center;">Numeri da 1 a 1000 </h1>
+    <div id="numbers-container"></div>
+
+    <script>
+      
+        function isPrime(num) {
+            if (num <= 1) return false;
+            for (let i = 2; i <= Math.sqrt(num); i++) {
+                if (num % i === 0) return false;
+            }
+            return true;
+        }
+
+       
+        function generateNumbers() {
+            const container = document.getElementById('numbers-container');
+            for (let i = 1; i <= 1000; i++) {
+                const div = document.createElement('div');
+                div.textContent = i;
+                div.classList.add('number');
+                
+                
+                if (isPrime(i)) {
+                    div.classList.add('prime');
+                } else {
+                    div.classList.add('non-prime');
+                }
+
+                container.appendChild(div);
+            }
+        }
+
+        
+        window.onload = generateNumbers;
+    </script>
+</body>
+</html>
