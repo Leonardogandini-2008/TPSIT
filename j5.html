@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Lezione sul setInterval</h1>
+    <p> Il setInterval è un comando per
+        creare un temporizzatore cioè una chiamata ad una
+        funzione ogni n millisecondi
+    </p>
+    <button onclick="getTime()">Test sul click</button>
+
+    <div>
+        <p id="out1"></p>
+    </div>
+
+<script>
+    const mioOutput = document.getElementById("out1");
+    let n = 0;  // inizializza la variabile n
+
+    // Impostiamo il setInterval per incrementare n ogni 1 secondo (1000 millisecondi)
+    setInterval(incrementaNumero, 1000);
+
+    // Funzione per incrementare e stampare il numero
+    function incrementaNumero() {
+        n++;  // Incrementa n di 1 ogni volta che viene chiamato
+        mioOutput.innerHTML = n;  // Stampa il valore di n nel div
+    }
+
+    // Funzione associata al bottone per un test al click
+    function getTime() {
+        alert("Numero attuale: " + n);
+    }
+</script>
+
+</body>
+</html>
