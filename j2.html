@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input e Alert</title>
+</head>
+<body>
+    <h1>Programma che prende un input e lo mostra in un Alert</h1>
+    <button onclick="prendiInput()">Clicca per inserire un input</button>
+
+<script>
+    function prendiInput() {
+        // Chiediamo all'utente di inserire qualcosa tramite prompt
+        let input = prompt("Inserisci qualcosa:");
+        
+        // Se l'utente ha inserito qualcosa, mostriamo il risultato in un alert
+        if (input !== null) {
+            alert("Hai inserito: " + input);
+        } else {
+            alert("Non hai inserito nulla!");
+        }
+    }
+</script>
+
+</body>
+</html>
