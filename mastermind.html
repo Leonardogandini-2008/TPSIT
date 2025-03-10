@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game Sequenziale</title>
+
+    <!-- Bootstrap 5 CSS per lo stile della pagina -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* Stili di base per il corpo e la pagina */
+        body {
+            background-color: #f0f0f0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #2C3E50;
+            margin-bottom: 30px;
+        }
+
+        /* Pulsante 'Inizia' stilizzato con Bootstrap */
+        .btn-primary {
+            background-color: #2ecc71;
+            border-color: #2ecc71;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 25px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #27ae60;
+            border-color: #27ae60;
+        }
+
+        /* Stile per il messaggio di stato */
+        #game-status {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #34495e;
+        }
+
+        /* Definisce i colori dei messaggi di stato */
+        .status-message {
+            color: #333;
+        }
+
+        .status-error {
+            color: red;
+        }
+
+        .status-success {
+            color: #2ecc71;
+        }
+
+        .status-info {
+            color: #7f8c8d;
+        }
+
+        /* Stile per la griglia dei pulsanti di gioco */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Griglia 2x2 */
+            gap: 30px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        /* Pulsanti con effetti di hover e attivazione */
+        .grid-button {
+            width: 120px;
+            height: 120px;
+            border-radius: 15px;
+            background-color: #BDC3C7;
+            border: none;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            transform: scale(1);
+        }
+
+        .grid-button.active {
+            transform: scale(1.1);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Effetto di ingrandimento */
+        }
+
+        .grid-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Colori dei pulsanti di gioco */
+        .red {
+            background-color: #e74c3c;
+        }
+
+        .blue {
+            background-color: #3498db;
+        }
+
+        .green {
+            background-color: #2ecc71;
+        }
+
+        .yellow {
+            background-color: #f1c40f;
+        }
+
+        /* La classe hidden nasconde la griglia inizialmente */
+        .hidden {
+            visibility: hidden;
+        }
+
+        /* Stile per il punteggio */
+        .score-box {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2C3E50;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Memory Game Sequenziale</h1>
+        <button id="start-btn" class="btn btn-primary">Inizia</button> <!-- Pulsante per iniziare il gioco -->
+
+        <div id="game-status" class="status-message">
+            <p id="status-message" class="status-info">Premi 'Inizia' per cominciare!</p>
+        </div>
+
+        <div id="game-board" class="grid-container mt-4 hidden">
+            <!-- I pulsanti dinamici verranno creati qui -->
+        </div>
+
+        <div class="score-box">
+            Punteggio: <span id="score">0</span> <!-- Visualizza il punteggio -->
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS e dipendenze -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        let sequence = []; // Sequenza generata dal gioco
+        let userSequence = []; // Sequenza dell'utente
+        let score = 0; // Punteggio
+        let isGameActive = false; // Flag per verificare se il gioco è attivo
+        let gridButtons = []; // Array per memorizzare i pulsanti
+
+        const colors = ['red', 'blue', 'green', 'yellow']; // Colori per i pulsanti
+
+        // Funzione per creare la griglia di pulsanti (2x2)
+        function createGrid() {
+            const gridContainer = document.getElementById("game-board");
+            gridContainer.innerHTML = ""; // Resetta la griglia
+
+            for (let i = 0; i < 4; i++) { // Crea 4 pulsanti (griglia 2x2)
+                const button = document.createElement("button");
+                button.classList.add("grid-button", colors[i]); // Assegna colore ai pulsanti
+                button.dataset.id = i;
+                button.addEventListener("click", () => handleUserInput(i)); // Aggiungi l'evento per il click
+                gridContainer.appendChild(button); // Aggiungi il pulsante alla griglia
+                gridButtons.push(button); // Aggiungi il pulsante all'array
+            }
+        }
+
+        // Funzione per avviare il gioco
+        function startGame() {
+            sequence = []; // Resetta la sequenza
+            userSequence = []; // Resetta la sequenza dell'utente
+            score = 0; // Resetta il punteggio
+            document.getElementById("score").textContent = score; // Aggiorna il punteggio sullo schermo
+            document.getElementById("status-message").textContent = "Sequenza in arrivo..."; // Aggiorna il messaggio
+            document.getElementById("status-message").className = "status-info"; // Cambia il colore del messaggio
+            document.getElementById("game-board").classList.remove("hidden"); // Mostra la griglia
+            isGameActive = true; // Imposta il gioco come attivo
+            addToSequence(); // Aggiungi un passo alla sequenza
+        }
+
+        // Funzione per aggiungere un nuovo elemento alla sequenza
+        function addToSequence() {
+            const randomButton = Math.floor(Math.random() * 4); // Genera un numero casuale tra 0 e 3
+            sequence.push(randomButton); // Aggiungi il pulsante alla sequenza
+            displaySequence(); // Mostra la sequenza all'utente
+        }
+
+        // Funzione per mostrare la sequenza di pulsanti
+        function displaySequence() {
+            let index = 0;
+            const interval = setInterval(() => {
+                const button = gridButtons[sequence[index]]; // Ottieni il pulsante dalla sequenza
+                button.classList.add("active"); // Aggiungi l'effetto di attivazione
+
+                setTimeout(() => {
+                    button.classList.remove("active"); // Rimuovi l'effetto dopo 500ms
+                }, 500);
+
+                index++;
+                if (index === sequence.length) {
+                    clearInterval(interval); // Ferma l'intervallo quando la sequenza è finita
+                    document.getElementById("status-message").textContent = "Tocca i pulsanti nell'ordine corretto!"; // Istruzione per l'utente
+                    document.getElementById("status-message").className = "status-success"; // Messaggio di successo
+                }
+            }, 1000); // Ogni 1 secondo
+        }
+
+        // Gestione dell'input dell'utente
+        function handleUserInput(buttonId) {
+            if (!isGameActive) return; // Se il gioco non è attivo, ignora l'input
+
+            userSequence.push(buttonId); // Aggiungi il pulsante alla sequenza dell'utente
+            const currentButton = gridButtons[buttonId];
+            currentButton.classList.add("active"); // Attiva il pulsante
+
+            setTimeout(() => {
+                currentButton.classList.remove("active"); // Rimuovi l'effetto dopo 500ms
+            }, 500);
+
+            // Verifica se l'input è corretto
+            if (userSequence[userSequence.length - 1] !== sequence[sequence.length - 1]) {
+                document.getElementById("status-message").textContent = "Hai sbagliato! Riprova."; // Messaggio di errore
+                document.getElementById("status-message").className = "status-error"; // Cambia il colore del messaggio
+                resetGame(); // Resetta il gioco
+            } else if (userSequence.length === sequence.length) {
+                score++; // Incrementa il punteggio
+                document.getElementById("score").textContent = score; // Mostra il punteggio aggiornato
+                userSequence = []; // Resetta la sequenza dell'utente
+                setTimeout(addToSequence, 1000); // Aggiungi un passo alla sequenza dopo 1 secondo
+            }
+        }
+
+        // Funzione per resettare il gioco
+        function resetGame() {
+            isGameActive = false; // Disattiva il gioco
+            document.getElementById("status-message").textContent = "Hai perso! Premi 'Inizia' per riprovare."; // Messaggio di fine gioco
+            document.getElementById("status-message").className = "status-error"; // Cambia il colore del messaggio
+        }
+
+        // Aggiungi l'evento per il pulsante 'Inizia'
+        document.getElementById("start-btn").addEventListener("click", startGame);
+
+        // Crea la griglia all'avvio della pagina
+        window.onload = createGrid;
+    </script>
+</body>
+
+</html>
