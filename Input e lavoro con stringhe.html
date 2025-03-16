@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Stringhe</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        input, button { margin: 10px; padding: 8px; font-size: 16px; }
+        #output { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h2>Manipolazione di Stringhe</h2>
+
+    <label for="str1">Stringa A:</label>
+    <input type="text" id="str1">
+    
+    <label for="str2">Stringa B:</label>
+    <input type="text" id="str2">
+
+    <br>
+    <button onclick="calcolaLunghezza()">Calcola Lunghezze</button>
+    <button onclick="invertiStringhe()">Inverti Stringhe</button>
+    <button onclick="unisciStringhe()">Unisci Stringhe</button>
+    <button onclick="controllaLunghezza()">Controlla Lunghezza</button>
+
+    <div id="output"></div>
+
+    <script>
+        function calcolaLunghezza() {
+            let str1 = document.getElementById("str1").value;
+            let str2 = document.getElementById("str2").value;
+            document.getElementById("output").innerText = 
+                `Lunghezza A: ${str1.length}, Lunghezza B: ${str2.length}`;
+        }
+
+        function invertiStringhe() {
+            let str1 = document.getElementById("str1").value;
+            let str2 = document.getElementById("str2").value;
+            let reversedA = str1.split("").reverse().join("");
+            let reversedB = str2.split("").reverse().join("");
+            document.getElementById("output").innerText = 
+                `Invertita A: ${reversedA}, Invertita B: ${reversedB}`;
+        }
+
+        function unisciStringhe() {
+            let str1 = document.getElementById("str1").value;
+            let str2 = document.getElementById("str2").value;
+            document.getElementById("output").innerText = 
+                `Stringa Unita: ${str1 + str2}`;
+        }
+
+        function controllaLunghezza() {
+            let str1 = document.getElementById("str1").value;
+            let str2 = document.getElementById("str2").value;
+            let sommaLunghezze = str1.length + str2.length;
+            let messaggio = `Somma delle lunghezze: ${sommaLunghezze}`;
+            if (str2.length > 20) {
+                messaggio += " - B troppo lunga!";
+            }
+            document.getElementById("output").innerText = messaggio;
+        }
+    </script>
+
+</body>
+</html>
