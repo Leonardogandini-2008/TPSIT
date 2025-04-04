@@ -1,0 +1,64 @@
+<SCRIPT Language='JavaScript'>
+    function inizia() {
+        var div1 = document.getElementById('div1');
+        var div2 = document.getElementById('div2');
+        
+        function muoviDiv(div) {
+            var maxX = window.innerWidth - 100;  // 100 è la larghezza del div
+            var maxY = window.innerHeight - 100; // 100 è l'altezza del div
+            var x = Math.floor(Math.random() * maxX);
+            var y = Math.floor(Math.random() * maxY);
+            div.style.left = x + 'px';
+            div.style.top = y + 'px';
+        }
+
+        function controllaCollisione() {
+            var rect1 = div1.getBoundingClientRect();
+            var rect2 = div2.getBoundingClientRect();
+
+            if (rect1.left < rect2.right &&
+                rect1.right > rect2.left &&
+                rect1.top < rect2.bottom &&
+                rect1.bottom > rect2.top) {
+                // Collisione rilevata
+                div1.style.backgroundColor = 'red';
+                div2.style.backgroundColor = 'red';
+            } else {
+                // Nessuna collisione
+                div1.style.backgroundColor = 'blue';
+                div2.style.backgroundColor = 'yellow';
+            }
+        }
+
+        setInterval(function() {
+            muoviDiv(div1);
+            muoviDiv(div2);
+            controllaCollisione();
+        }, 1000);  // Aggiorna ogni secondo
+    }
+</SCRIPT>
+
+<HTML>
+   <HEAD>
+   <TITLE>Empotizzatore2</TITLE>
+   </HEAD>
+
+   <style type="text/css">
+      .div-mobile {
+         position: absolute;
+         width: 100px;
+         height: 100px;
+      }
+      #div1 {
+         background-color: blue;
+      }
+      #div2 {
+         background-color: yellow;
+      }
+   </style>
+
+    <BODY onLoad="inizia()">
+    <DIV id='div1' class='div-mobile'></DIV>
+    <DIV id='div2' class='div-mobile'></DIV>
+    </BODY>
+</HTML>
