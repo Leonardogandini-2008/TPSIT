@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generatore di Numeri Casuali</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f7f7f7;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #4caf50;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 1rem;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 2px solid #ddd;
+            outline: none;
+            width: 100px;
+        }
+
+        input:focus {
+            border-color: #4caf50;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #output {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            text-align: left;
+            color: #333;
+            font-size: 1rem;
+            word-break: break-word;
+        }
+
+        .media {
+            margin-top: 10px;
+            background-color: #f3f9f3;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #c8e6c9;
+            font-weight: bold;
+            color: #388e3c;
+        }
+
+        .media p {
+            margin: 5px 0;
+        }
+
+        .footer {
+            font-size: 1rem;
+            margin-top: 30px;
+            text-align: center;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Generatore di Numeri Casuali</h1>
+        <label for="min">Min:</label>
+        <input type="number" id="min" value="1">
+        <label for="max">Max:</label>
+        <input type="number" id="max" value="100">
+        <button onclick="generaNumeri()">Genera</button>
+        
+        <div id="output"></div>
+        <div class="media" id="media-container">
+            <!-- Media info will go here -->
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 Generatore Numeri Casuali. Creato con passione!</p>
+    </div>
+
+    <script>
+        function generaNumeri() {
+            const min = parseFloat(document.getElementById('min').value);
+            const max = parseFloat(document.getElementById('max').value);
+            if (isNaN(min) || isNaN(max) || min >= max) {
+                alert("Inserisci un intervallo valido.");
+                return;
+            }
+
+            let numeri = "";
+            let numeriArray = [];
+            let medie = [];
+            
+            // Genera i numeri casuali e riempi l'array
+            for (let i = 0; i < 10000; i++) {
+                let numeroCasuale = (Math.random() * (max - min) + min).toFixed(2); // Numeri reali
+                numeriArray.push(parseFloat(numeroCasuale)); // Aggiungi al array
+                
+                numeri += numeroCasuale + " ";
+                
+                // Ogni 50 numeri, calcola la media
+                if ((i + 1) % 50 === 0) {
+                    let media = calcolaMedia(numeriArray.slice(i - 49, i + 1)); // Calcola la media dei 50 numeri
+                    numeri += "Media: " + media.toFixed(2); // Aggiungi la media alla riga
+                    medie.push(media); // Aggiungi la media all'array delle medie
+                    numeri += "\n"; // Vai a capo dopo ogni blocco di 50 numeri
+                }
+            }
+            
+            // Mostra i numeri generati
+            document.getElementById('output').textContent = numeri;
+
+            // Mostra la media
+            mostraMedie(medie);
+        }
+
+        // Funzione per calcolare la media di un array di numeri
+        function calcolaMedia(numeri) {
+            const somma = numeri.reduce((acc, val) => acc + val, 0);
+            return somma / numeri.length;
+        }
+
+        // Mostra le medie in un contenitore
+        function mostraMedie(medie) {
+            const mediaContainer = document.getElementById('media-container');
+            mediaContainer.innerHTML = "<h3>Medie dei Gruppi di 50 Numeri:</h3>";
+            medie.forEach((media, index) => {
+                const mediaElem = document.createElement('p');
+                mediaElem.textContent = `Gruppo ${index + 1}: Media = ${media.toFixed(2)}`;
+                mediaContainer.appendChild(mediaElem);
+            });
+        }
+    </script>
+</body>
+</html>
