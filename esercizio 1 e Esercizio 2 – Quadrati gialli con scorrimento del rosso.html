@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Esercizi Temporizzatore</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h2 {
+      margin-top: 40px;
+    }
+
+    /* Esercizio 1 */
+    #container1 {
+      width: 400px;
+      height: 400px;
+      position: relative;
+      border: 2px solid black;
+      margin-bottom: 20px;
+    }
+    #square1 {
+      width: 50px;
+      height: 50px;
+      background-color: red;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    /* Esercizio 2 */
+    #container2 {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .box2 {
+      width: 50px;
+      height: 50px;
+      background-color: yellow;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Esercitazioni su Temporizzatore – I.I.S. “Maxwell”</h1>
+
+  <!-- Esercizio 1 -->
+  <h2>Esercizio 1 – Movimento Orario ogni secondo di 10px</h2>
+  <div id="container1">
+    <div id="square1"></div>
+  </div>
+
+  <!-- Esercizio 2 -->
+  <h2>Esercizio 2 – Scorrimento del Quadrato Rosso</h2>
+  <div id="container2"></div>
+
+  <script>
+    // Esercizio 1 – Movimento Orario (10px ogni secondo)
+    const square1 = document.getElementById("square1");
+    let x = 0, y = 0, dir = 0;
+
+    setInterval(() => {
+      switch (dir) {
+        case 0: x += 10; if (x >= 350) dir = 1; break; // destra
+        case 1: y += 10; if (y >= 350) dir = 2; break; // basso
+        case 2: x -= 10; if (x <= 0) dir = 3; break;   // sinistra
+        case 3: y -= 10; if (y <= 0) dir = 0; break;   // alto
+      }
+      square1.style.left = x + "px";
+      square1.style.top = y + "px";
+    }, 1000); // ogni secondo
+
+    // Esercizio 2 – Quadrato rosso che scorre
+    const container2 = document.getElementById("container2");
+    const boxes2 = [];
+
+    for (let i = 0; i < 8; i++) {
+      const box = document.createElement("div");
+      box.className = "box2";
+      container2.appendChild(box);
+      boxes2.push(box);
+    }
+
+    let index = 0;
+
+    setInterval(() => {
+      boxes2.forEach(box => box.style.backgroundColor = "yellow");
+      boxes2[index].style.backgroundColor = "red";
+      index = (index + 1) % boxes2.length;
+    }, 500);
+  </script>
+
+</body>
+</html>
