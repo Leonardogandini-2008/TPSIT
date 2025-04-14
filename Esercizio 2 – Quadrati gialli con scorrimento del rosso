@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    #container {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .box {
+      width: 50px;
+      height: 50px;
+      background-color: yellow;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Scorrimento del Quadrato Rosso</h2>
+<div id="container"></div>
+
+<script>
+  const container = document.getElementById("container");
+  let boxes = [];
+
+  // Crea 8 quadrati gialli
+  for (let i = 0; i < 8; i++) {
+    const div = document.createElement("div");
+    div.className = "box";
+    container.appendChild(div);
+    boxes.push(div);
+  }
+
+  let current = 0;
+
+  setInterval(() => {
+    // Reset tutti i colori
+    boxes.forEach(box => box.style.backgroundColor = "yellow");
+
+    // Imposta il successivo in rosso
+    boxes[current].style.backgroundColor = "red";
+
+    // Avanza al prossimo
+    current = (current + 1) % boxes.length;
+  }, 500); // ogni 500ms
+</script>
+
+</body>
+</html>
